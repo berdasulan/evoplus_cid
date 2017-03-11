@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <arpa/inet.h>
@@ -55,7 +56,7 @@ int program_cid(int fd, const unsigned char *cid) {
 	idata.flags = MMC_RSP_SPI_R1 | MMC_RSP_R1 | MMC_CMD_ADTC;
 	idata.blksz = CID_SIZE;
 	idata.blocks = 1;
-	idata.data_ptr = (__u64)cid;
+        idata.data_ptr = (__u64)((unsigned long) cid);
 
 	ret = ioctl(fd, MMC_IOC_CMD, &idata);
 	if (ret) {
